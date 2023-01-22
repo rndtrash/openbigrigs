@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 # Settings
-option(ZRES_FILENAME "Filename of the .res resource pack" "Carz.res")
+# option(ZRES_FILENAME "Filename of the .res resource pack" "Carz.res")
 
 # Include modules
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")

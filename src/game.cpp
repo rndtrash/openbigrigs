@@ -9,7 +9,7 @@ namespace OBR
 
 Game* Game::instance = nullptr;
 
-Game::Game()
+Game::Game(int argc, char** argv)
 {
 	instance = this;
 
@@ -20,6 +20,7 @@ Game::Game()
 			throw std::runtime_error("Could not initialize SDL: " + std::string(SDL_GetError()));
 	}
 
+	fs = std::make_shared<FileSystem>(argc, argv);
 	window = new Window("OpenBigRigs", 800, 600);
 	audio = std::make_shared<AudioSystem>();
 }

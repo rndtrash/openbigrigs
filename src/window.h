@@ -14,12 +14,9 @@ public:
 	~Window();
 
 	SDL_Window* get_window() { return window; }
-	SDL_GLContext* get_gl_context() { return glContext; }
 
 private:
 	SDL_Window* window = nullptr;
-	SDL_Renderer* renderer = nullptr;
-	SDL_GLContext* glContext = nullptr;
 };
 
 }

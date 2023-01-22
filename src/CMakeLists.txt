@@ -5,12 +5,14 @@
 set(OBR_HEADERS
 	audio.h
 	window.h
+	fs.h
 	game.h
 )
 
 set(OBR_SOURCES
 	audio.cpp
 	window.cpp
+	fs.cpp
 	game.cpp
 
 	main.cpp
@@ -19,7 +21,7 @@ set(OBR_SOURCES
 target_sources(OpenBigRigs
 	PRIVATE
 		${OBR_SOURCES}
-		${OBR_HEADERS}
+#		${OBR_HEADERS}
 )
 
 target_compile_features(OpenBigRigs
