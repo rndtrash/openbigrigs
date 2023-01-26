@@ -15,7 +15,7 @@ FileSystem::FileSystem(int argc, char** argv)
 		throw std::runtime_error("Could not initialize file system: " + std::string(PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode())));
 
 	if (PHYSFS_mount("Data/", "Data/", 0) == 0)
-		throw std::runtime_error("Could not mount the data folder: " + std::string(PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode())));
+		spdlog::warn("Could not mount the data folder: " + std::string(PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode())));
 	if (PHYSFS_mount("Carz.res", nullptr, 1) == 0) // Add ZRes to the end of search list
 		spdlog::warn("Didn't manage to find a valid Carz.res file from the original Big Rigs installation. Some textures might appear incorrect.");
 
