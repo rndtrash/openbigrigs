@@ -11,6 +11,7 @@ namespace OBR
 
 FileSystem::FileSystem(int argc, char** argv)
 {
+    // TODO: needs some changes for the Android build to work
 	if (argc < 1 || PHYSFS_init(argv[0]) == 0)
 		throw std::runtime_error("Could not initialize file system: " + std::string(PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode())));
 

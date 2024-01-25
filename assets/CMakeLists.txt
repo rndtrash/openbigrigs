@@ -1,0 +1,5 @@
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/cdaudio
+        DESTINATION ${CMAKE_BINARY_DIR}/Data)
+# TODO: build the shaders
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/shaders
+        DESTINATION ${CMAKE_BINARY_DIR}/Data)

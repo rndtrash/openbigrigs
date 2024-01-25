@@ -7,6 +7,7 @@
 #include "window.h"
 #include "audio.h"
 #include "fs.h"
+#include "renderer.h"
 
 namespace OBR
 {
@@ -25,10 +26,9 @@ public:
 	static Game& the() { return *instance; }
 
 private:
-	Window* window;
-
 	std::shared_ptr<AudioSystem> audio;
 	std::shared_ptr<FileSystem> fs;
+    std::shared_ptr<Renderer> renderer;
 
 	static Game* instance;
 };

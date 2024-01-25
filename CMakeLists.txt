@@ -17,21 +17,22 @@ add_compile_options(-Wall -Wextra -Werror -Wpedantic -Wno-error=unused-but-set-p
 add_executable(OpenBigRigs "")
 
 target_include_directories(OpenBigRigs
-	PRIVATE
-		${SDL2_INCLUDE_DIR}
-		${SDL2_MIXER_INCLUDE_DIR}
-		${SDL2_IMAGE_INCLUDE_DIR}
+        PRIVATE
+        ${SDL2_INCLUDE_DIR}
+        ${SDL2_MIXER_INCLUDE_DIR}
+        ${SDL2_IMAGE_INCLUDE_DIR}
 )
 
 target_link_libraries(OpenBigRigs
-	PRIVATE
-		${SDL2_LIBRARY}
-		${SDL2_MIXER_LIBRARY}
-		${SDL2_IMAGE_LIBRARY}
-
-		bgfx
-		spdlog
-		PhysFS::PhysFS-static
+        PRIVATE
+        ${SDL2_LIBRARY}
+        ${SDL2_MIXER_LIBRARY}
+        ${SDL2_IMAGE_LIBRARY}
+        bx
+        bgfx
+        spdlog
+        PhysFS::PhysFS-static
 )
 
+add_subdirectory(assets)
 add_subdirectory(src)
