@@ -9,28 +9,28 @@
 #include "fs.h"
 #include "renderer.h"
 
-namespace OBR
-{
+namespace OBR {
 
-class Game
-{
-public:
-	Game(int argc, char** argv);
-	~Game();
+    class Game {
+    public:
+        Game(int argc, char **argv);
 
-	void run();
+        ~Game();
 
-	std::shared_ptr<const AudioSystem> get_audio() { return audio; }
-	std::shared_ptr<const FileSystem> get_fs() { return fs; }
+        void run();
 
-	static Game& the() { return *instance; }
+        std::shared_ptr<const AudioSystem> get_audio() { return audio; }
 
-private:
-	std::shared_ptr<AudioSystem> audio;
-	std::shared_ptr<FileSystem> fs;
-    std::shared_ptr<Renderer> renderer;
+        std::shared_ptr<const FileSystem> get_fs() { return fs; }
 
-	static Game* instance;
-};
+        static Game &the() { return *instance; }
+
+    private:
+        std::shared_ptr<AudioSystem> audio;
+        std::shared_ptr<FileSystem> fs;
+        std::shared_ptr<Renderer> renderer;
+
+        static Game *instance;
+    };
 
 }

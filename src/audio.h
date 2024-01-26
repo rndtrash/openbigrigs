@@ -1,15 +1,14 @@
 #pragma once
 
-namespace OBR
-{
+namespace OBR {
 
-class AudioSystem
-{
-public:
-	AudioSystem();
-	~AudioSystem();
-	
-private:
-};
+    class AudioSystem {
+    public:
+        AudioSystem();
+
+        ~AudioSystem();
+
+    private:
+    };
 
 }

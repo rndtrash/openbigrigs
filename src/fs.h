@@ -1,15 +1,14 @@
 #pragma once
 
-namespace OBR
-{
+namespace OBR {
 
-class FileSystem
-{
-public:
-	FileSystem(int argc, char** argv);
-	~FileSystem();
+    class FileSystem {
+    public:
+        FileSystem(int argc, char **argv);
 
-private:
-};
+        ~FileSystem();
+
+    private:
+    };
 
 }

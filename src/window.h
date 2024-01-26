@@ -14,6 +14,7 @@ public:
 	~Window();
 
 	SDL_Window* get_window() { return window; }
+
     /// Get dimensions of the window
     /// \returns std::pair with width and height of the window
     std::pair<int, int> get_size();
