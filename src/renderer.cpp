@@ -52,22 +52,14 @@ namespace OBR {
     static bgfx::ProgramHandle program;
 
     static const bgfx::Memory *loadMem(const char *_filePath) {
-        auto fs = Game::the().get_fs();
         // TODO: move this to the filesystem
-        auto file = PHYSFS_openRead(_filePath);
-        if (fs != nullptr && file != nullptr) {
-            auto size = PHYSFS_fileLength(file);
-            const bgfx::Memory *mem = bgfx::alloc(size + 1);
-            if (PHYSFS_readBytes(file, mem->data, size) != size)
-                throw std::runtime_error("PHYSFS_readBytes");
-            PHYSFS_close(file);
-            mem->data[mem->size - 1] = '\0';
-            return mem;
-        }
-
-        throw std::runtime_error(
-                "Failed to load " + std::string(_filePath) + " (" + PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()) +
-                ")");
+        auto fs = Game::the().get_fs();
+        auto file = fs->get_file(_filePath);
+        auto size = file->get_size();
+        const bgfx::Memory *mem = bgfx::alloc(size + 1);
+        file->read_to(mem);
+        mem->data[mem->size - 1] = '\0';
+        return mem;
     }
 
     static bgfx::ShaderHandle loadShader(const char *_name) {

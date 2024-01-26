@@ -21,7 +21,7 @@ namespace OBR {
 
         std::shared_ptr<const AudioSystem> get_audio() { return audio; }
 
-        std::shared_ptr<const FileSystem> get_fs() { return fs; }
+        std::shared_ptr<FileSystem> get_fs() { return fs; }
 
         static Game &the() { return *instance; }
 

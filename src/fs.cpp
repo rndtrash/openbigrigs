@@ -35,4 +35,9 @@ namespace OBR {
                     "Failed to shutdown file system: " + std::string(PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode())));
     }
 
+    std::unique_ptr<File> FileSystem::get_file(const std::string &path) {
+        // TODO: make a registry of files
+        return std::make_unique<File>(path);
+    }
+
 }
