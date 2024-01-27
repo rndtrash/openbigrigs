@@ -6,7 +6,7 @@
 
 #include "renderer.h"
 #include "game.h"
-#include "fs.h"
+#include "resources/base_resource_manager.h"
 
 namespace OBR {
     struct PosColorVertex {
@@ -47,66 +47,9 @@ namespace OBR {
     static bgfx::VertexLayout vertexLayout;
     static bgfx::VertexBufferHandle vertexBufferHandle;
     static bgfx::IndexBufferHandle indexBufferHandle;
-    static bgfx::ShaderHandle vsh;
-    static bgfx::ShaderHandle fsh;
+    std::shared_ptr<Shader> vsh;
+    std::shared_ptr<Shader> fsh;
     static bgfx::ProgramHandle program;
-
-    static const bgfx::Memory *loadMem(const char *_filePath) {
-        // TODO: move this to the filesystem
-        auto fs = Game::the().get_fs();
-        auto file = fs->get_file(_filePath);
-        auto size = file->get_size();
-        const bgfx::Memory *mem = bgfx::alloc(size + 1);
-        file->read_to(mem);
-        mem->data[mem->size - 1] = '\0';
-        return mem;
-    }
-
-    static bgfx::ShaderHandle loadShader(const char *_name) {
-        char filePath[512];
-
-        const char *shaderPath = "???";
-
-        switch (bgfx::getRendererType()) {
-            case bgfx::RendererType::Noop:
-            case bgfx::RendererType::Direct3D11:
-            case bgfx::RendererType::Direct3D12:
-                shaderPath = "Data/shaders/dx11/";
-                break;
-            case bgfx::RendererType::Agc:
-            case bgfx::RendererType::Gnm:
-                shaderPath = "Data/shaders/pssl/";
-                break;
-            case bgfx::RendererType::Metal:
-                shaderPath = "Data/shaders/metal/";
-                break;
-            case bgfx::RendererType::Nvn:
-                shaderPath = "Data/shaders/nvn/";
-                break;
-            case bgfx::RendererType::OpenGL:
-                shaderPath = "Data/shaders/glsl/";
-                break;
-            case bgfx::RendererType::OpenGLES:
-                shaderPath = "Data/shaders/essl/";
-                break;
-            case bgfx::RendererType::Vulkan:
-                shaderPath = "Data/shaders/spirv/";
-                break;
-
-            case bgfx::RendererType::Count:
-                BX_ASSERT(false, "You should not be here!");
-                break;
-        }
-
-        bx::strCopy(filePath, BX_COUNTOF(filePath), shaderPath);
-        bx::strCat(filePath, BX_COUNTOF(filePath), _name);
-        bx::strCat(filePath, BX_COUNTOF(filePath), ".bin");
-
-        bgfx::ShaderHandle handle = bgfx::createShader(loadMem(filePath));
-        bgfx::setName(handle, _name);
-
-        return handle;
-    }
 
     Renderer::Renderer() {
         window = new Window("OpenBigRigs", 800, 600);
@@ -120,16 +63,16 @@ namespace OBR {
                                                       vertexLayout);
         indexBufferHandle = bgfx::createIndexBuffer(bgfx::makeRef(s_cubeTriList, sizeof(s_cubeTriList)));
 
-        vsh = loadShader("vs_cubes");
-        fsh = loadShader("fs_cubes");
-        program = bgfx::createProgram(vsh, fsh, true);
+        vsh = Game::the().get_rm()->shaders->get("vs_cubes");
+        fsh = Game::the().get_rm()->shaders->get("fs_cubes");
+        program = bgfx::createProgram(vsh->get_handle(), fsh->get_handle(), false);
     }
 
     Renderer::~Renderer() {
         destroy(indexBufferHandle);
         destroy(vertexBufferHandle);
-        destroy(vsh);
-        destroy(fsh);
+        vsh.reset();
+        fsh.reset();
         destroy(program);
 
         delete window;

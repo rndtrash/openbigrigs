@@ -5,6 +5,10 @@
 #include "game.h"
 
 int main(int argc, char **argv) {
+#if 1
+    spdlog::set_level(spdlog::level::trace);
+#endif
+
     spdlog::info("Hellorld!");
 
     try {

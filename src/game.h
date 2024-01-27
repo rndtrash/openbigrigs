@@ -6,8 +6,8 @@
 
 #include "window.h"
 #include "audio.h"
-#include "fs.h"
 #include "renderer.h"
+#include "resources/resource_manager.h"
 
 namespace OBR {
 
@@ -21,13 +21,13 @@ namespace OBR {
 
         std::shared_ptr<const AudioSystem> get_audio() { return audio; }
 
-        std::shared_ptr<FileSystem> get_fs() { return fs; }
+        std::shared_ptr<ResourceManager> get_rm() { return resourceManager; }
 
         static Game &the() { return *instance; }
 
     private:
         std::shared_ptr<AudioSystem> audio;
-        std::shared_ptr<FileSystem> fs;
+        std::shared_ptr<ResourceManager> resourceManager;
         std::shared_ptr<Renderer> renderer;
 
         static Game *instance;

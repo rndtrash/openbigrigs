@@ -18,7 +18,7 @@ namespace OBR {
                 throw std::runtime_error("Could not initialize SDL: " + std::string(SDL_GetError()));
         }
 
-        fs = std::make_shared<FileSystem>(argc, argv);
+        resourceManager = std::make_shared<ResourceManager>(argc, argv);
         audio = std::make_shared<AudioSystem>();
         renderer = std::make_shared<Renderer>();
     }

@@ -5,8 +5,11 @@
 set(OBR_HEADERS
         audio.h
         window.h
-        file.h
-        fs.h
+        resources/resource.h
+        resources/file.h
+        resources/shader.h
+        resources/base_resource_manager.h
+        resources/resource_manager.h
         renderer.h
         game.h
 )
@@ -14,8 +17,10 @@ set(OBR_HEADERS
 set(OBR_SOURCES
         audio.cpp
         window.cpp
-        file.cpp
-        fs.cpp
+        resources/resource.cpp
+        resources/file.cpp
+        resources/shader.cpp
+        resources/resource_manager.cpp
         renderer.cpp
         game.cpp
 

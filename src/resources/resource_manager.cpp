@@ -1,14 +1,11 @@
-#include <stdexcept>
-#include <string>
-
-#include <spdlog/spdlog.h>
 #include <physfs.h>
+#include <spdlog/spdlog.h>
 
-#include "fs.h"
+#include "resource_manager.h"
 
 namespace OBR {
 
-    FileSystem::FileSystem(int argc, char **argv) {
+    ResourceManager::ResourceManager(int argc, char **argv) {
         // TODO: needs some changes for the Android build to work
         if (argc < 1 || PHYSFS_init(argv[0]) == 0)
             throw std::runtime_error("Could not initialize file system: " +
@@ -27,17 +24,17 @@ namespace OBR {
                 spdlog::error("Failed to load mod \"{}\": {}", path,
                               std::string(PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode())));
         }
+
+        files = std::make_shared<BaseResourceManager<File>>();
+        shaders = std::make_shared<BaseResourceManager<Shader>>();
     }
 
-    FileSystem::~FileSystem() {
+    ResourceManager::~ResourceManager() {
+        files.reset();
+        shaders.reset();
+
         if (PHYSFS_deinit() == 0)
             spdlog::error(
                     "Failed to shutdown file system: " + std::string(PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode())));
     }
-
-    std::unique_ptr<File> FileSystem::get_file(const std::string &path) {
-        // TODO: make a registry of files
-        return std::make_unique<File>(path);
-    }
-
 }
