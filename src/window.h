@@ -1,26 +1,30 @@
 #pragma once
 
 #include <string>
+#include <memory>
 
 #include <SDL2/SDL.h>
 
-namespace OBR
-{
+#include "rgb_plus_a_surface.h"
 
-class Window
-{
-public:
-	Window(const std::string& title, int width, int height); // TODO: accept flags for turning VSync on and off
-	~Window();
+namespace OBR {
 
-	SDL_Window* get_window() { return window; }
+    class Window {
+    public:
+        Window(const std::string &title, int width, int height); // TODO: accept flags for turning VSync on and off
+        ~Window();
 
-    /// Get dimensions of the window
-    /// \returns std::pair with width and height of the window
-    std::pair<int, int> get_size();
+        SDL_Window *get_window() { return window; }
 
-private:
-	SDL_Window* window = nullptr;
-};
+        /// Get dimensions of the window
+        /// \returns std::pair with width and height of the window
+        std::pair<int, int> get_size();
+
+    private:
+        SDL_Window *window = nullptr;
+
+        std::unique_ptr<RGBPlusASurface> cursorSurface;
+        SDL_Cursor *cursor = nullptr;
+    };
 
 }

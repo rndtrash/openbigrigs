@@ -27,11 +27,13 @@ namespace OBR {
 
         files = std::make_shared<BaseResourceManager<File>>();
         shaders = std::make_shared<BaseResourceManager<Shader>>();
+        surfaces = std::make_shared<BaseResourceManager<Surface>>();
     }
 
     ResourceManager::~ResourceManager() {
         files.reset();
         shaders.reset();
+        surfaces.reset();
 
         if (PHYSFS_deinit() == 0)
             spdlog::error(

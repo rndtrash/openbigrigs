@@ -5,6 +5,7 @@
 #include <SDL2/SDL_syswm.h>
 
 #include "window.h"
+#include "game.h"
 
 namespace OBR {
 
@@ -25,6 +26,25 @@ namespace OBR {
             throw std::runtime_error("Failed creating window: " + std::string(SDL_GetError()));
 
         SDL_ShowWindow(window);
+
+        {
+            auto cursorColor = Game::the().get_rm()->surfaces->get("Data/Menu/cursor.bmp");
+            auto cursorColorSurface = cursorColor->get_surface();
+            auto cursorAlpha = Game::the().get_rm()->surfaces->get("Data/Menu/cursor_a.bmp");
+            auto cursorAlphaSurface = cursorAlpha->get_surface();
+
+            cursorSurface = std::make_unique<RGBPlusASurface>(cursorColorSurface, cursorAlphaSurface);
+        }
+        spdlog::debug("cursorColor and cursorAlpha should be destroyed by now");
+
+        // TODO: the hotspot is probably defined somewhere
+        cursor = SDL_CreateColorCursor(cursorSurface->get_surface(), 0, 0);
+        if (cursor == nullptr) {
+            cursorSurface.reset();
+            throw std::runtime_error("Could not create a cursor: " + std::string(SDL_GetError()));
+        }
+
+        SDL_SetCursor(cursor);
 
         bgfx::Init init;
 
@@ -67,6 +87,9 @@ namespace OBR {
     }
 
     Window::~Window() {
+        SDL_FreeCursor(cursor);
+        cursorSurface.reset();
+
         SDL_DestroyWindow(window);
     }
 

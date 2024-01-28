@@ -1,9 +1,10 @@
 #include <stdexcept>
 
 #include <bgfx/bgfx.h>
+#include <SDL_image.h>
+#include <spdlog/spdlog.h>
 
 #include "game.h"
-#include "spdlog/spdlog.h"
 
 namespace OBR {
 
@@ -16,6 +17,10 @@ namespace OBR {
             SDL_SetMainReady();
             if (SDL_Init(0) != 0)
                 throw std::runtime_error("Could not initialize SDL: " + std::string(SDL_GetError()));
+
+            const auto sdlImageFlags = IMG_INIT_JPG | IMG_INIT_PNG;
+            if (IMG_Init(sdlImageFlags) != sdlImageFlags)
+                throw std::runtime_error("Could not initialize SDL_Image: " + std::string(IMG_GetError()));
         }
 
         resourceManager = std::make_shared<ResourceManager>(argc, argv);
@@ -27,6 +32,7 @@ namespace OBR {
         renderer.reset();
         audio.reset(); // explicitly freeing before the SDL_Quit
 
+        IMG_Quit();
         SDL_Quit();
     }
 

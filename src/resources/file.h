@@ -10,5 +10,9 @@ namespace OBR {
         ssize_t getSize();
 
         void readTo(const bgfx::Memory *memory);
+
+        void readTo(std::vector<uint8_t> &memory);
+
+        void readTo(uint8_t *memory, ssize_t size);
     };
 }
