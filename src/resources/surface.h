@@ -11,7 +11,7 @@ namespace OBR {
 
         ~Surface() override;
 
-        const SDL_Surface *get_surface() { return surface; }
+        SDL_Surface *get_surface() { return surface; }
 
     private:
         SDL_Surface *surface;

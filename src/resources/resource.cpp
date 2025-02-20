@@ -19,7 +19,8 @@ namespace OBR {
                          std::string(PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode())));
     }
 
-    ssize_t Resource::get_file_size() {
+    ssize_t Resource::get_file_size() const
+    {
         return PHYSFS_fileLength(this->fileHandle);
     }
 

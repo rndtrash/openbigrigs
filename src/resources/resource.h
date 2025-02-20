@@ -16,7 +16,7 @@ namespace OBR {
         std::string get_path() { return path; }
 
     protected:
-        ssize_t get_file_size();
+        ssize_t get_file_size() const;
 
         void read_file_to(const bgfx::Memory *memory);
 

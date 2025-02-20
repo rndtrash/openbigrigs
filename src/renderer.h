@@ -12,6 +12,6 @@ namespace OBR {
         void render();
 
     private:
-        Window *window;
+        ObrWindow *window;
     };
 }

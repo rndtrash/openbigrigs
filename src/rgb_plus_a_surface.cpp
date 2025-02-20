@@ -1,23 +1,27 @@
 #include <stdexcept>
 #include "rgb_plus_a_surface.h"
 
-namespace OBR {
+namespace OBR
+{
+    RGBPlusASurface::RGBPlusASurface(SDL_Surface* rgbaSurface, SDL_Surface* alphaSurface)
+    {
+        SDL_Rect rgbaRect, alphaRect;
+        if (!SDL_GetSurfaceClipRect(rgbaSurface, &rgbaRect) || !SDL_GetSurfaceClipRect(alphaSurface, &alphaRect))
+            throw std::runtime_error("Failed to get the size of the RGBA surfaces: " + std::string(SDL_GetError()));
 
-    RGBPlusASurface::RGBPlusASurface(const SDL_Surface *rgbaSurface, const SDL_Surface *alphaSurface) {
-        if (!SDL_RectEquals(&rgbaSurface->clip_rect, &alphaSurface->clip_rect))
+        if (!SDL_RectsEqual(&rgbaRect, &alphaRect))
             throw std::runtime_error("Attempted to load color and alpha textures for the different cursors");
 
-        surface = SDL_CreateRGBSurfaceWithFormat(0,
-                                                 rgbaSurface->clip_rect.w,
-                                                 rgbaSurface->clip_rect.h,
-                                                       32,
-                                                       SDL_PIXELFORMAT_RGBA8888);
+        surface = SDL_CreateSurface(rgbaRect.w,
+                                    rgbaRect.h,
+                                    SDL_PIXELFORMAT_RGBA8888);
 
-        const auto pixelCount = rgbaSurface->clip_rect.w * rgbaSurface->clip_rect.h;
-        auto p = (uint8_t *) surface->pixels;
-        auto colorP = (uint8_t *) rgbaSurface->pixels;
-        auto alphaP = (uint8_t *) alphaSurface->pixels;
-        for (auto i = 0; i < pixelCount; i++) {
+        const auto pixelCount = rgbaRect.w * rgbaRect.h;
+        auto p = static_cast<uint8_t*>(surface->pixels);
+        auto colorP = static_cast<uint8_t*>(rgbaSurface->pixels);
+        auto alphaP = static_cast<uint8_t*>(alphaSurface->pixels);
+        for (auto i = 0; i < pixelCount; i++)
+        {
             // TODO: oh god
             *p++ = *colorP++;
             *p++ = *colorP++;
@@ -27,7 +31,8 @@ namespace OBR {
         }
     }
 
-    RGBPlusASurface::~RGBPlusASurface() {
-        SDL_FreeSurface(surface);
+    RGBPlusASurface::~RGBPlusASurface()
+    {
+        SDL_DestroySurface(surface);
     }
 }

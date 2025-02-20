@@ -52,7 +52,7 @@ namespace OBR {
     static bgfx::ProgramHandle program;
 
     Renderer::Renderer() {
-        window = new Window("OpenBigRigs", 800, 600);
+        window = new ObrWindow("OpenBigRigs", 800, 600);
 
         vertexLayout.begin()
                 .add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float)

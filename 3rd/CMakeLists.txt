@@ -1,6 +1,6 @@
-find_package(SDL2 REQUIRED)
-find_package(SDL2_image REQUIRED)
-find_package(SDL2_mixer REQUIRED)
+add_subdirectory(SDL)
+add_subdirectory(SDL_mixer)
+add_subdirectory(SDL_image)
 
 set(BGFX_BUILD_EXAMPLES OFF)
 add_subdirectory(bgfx.cmake)

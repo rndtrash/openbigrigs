@@ -1,13 +1,13 @@
 #pragma once
 
-#include <SDL2/SDL.h>
+#include <SDL3/SDL.h>
 
 #include "resources/surface.h"
 
 namespace OBR {
     class RGBPlusASurface {
     public:
-        RGBPlusASurface(const SDL_Surface *rgbaSurface, const SDL_Surface *alphaSurface);
+        RGBPlusASurface(SDL_Surface *rgbaSurface, SDL_Surface *alphaSurface);
 
         ~RGBPlusASurface();
 

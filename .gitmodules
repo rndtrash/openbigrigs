@@ -7,3 +7,12 @@
 [submodule "3rd/physfs"]
 	path = 3rd/physfs
 	url = https://github.com/icculus/physfs.git
+[submodule "3rd/SDL"]
+	path = 3rd/SDL
+	url = https://github.com/libsdl-org/SDL.git
+[submodule "3rd/SDL_mixer"]
+	path = 3rd/SDL_mixer
+	url = https://github.com/libsdl-org/SDL_mixer.git
+[submodule "3rd/SDL_image"]
+	path = 3rd/SDL_image
+	url = https://github.com/libsdl-org/SDL_image.git

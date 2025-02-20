@@ -9,10 +9,10 @@
 
 namespace OBR {
 
-    class Window {
+    class ObrWindow {
     public:
-        Window(const std::string &title, int width, int height); // TODO: accept flags for turning VSync on and off
-        ~Window();
+        ObrWindow(const std::string &title, int width, int height); // TODO: accept flags for turning VSync on and off
+        ~ObrWindow();
 
         SDL_Window *get_window() { return window; }
 
